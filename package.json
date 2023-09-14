@@ -16,6 +16,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@vite-pwa/assets-generator": "^0.0.10",
     "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^4.4.5",
     "vite-plugin-pwa": "^0.16.4"
