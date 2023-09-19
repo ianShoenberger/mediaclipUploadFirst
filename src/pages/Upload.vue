@@ -1,13 +1,14 @@
 <script setup>
-import { ref } from 'vue'
-import { MediaclipHubApi } from '../api'
+import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { products } from '../config'
 
+const router = useRouter()
+const mediaclipHubApi = inject('mediaclipHubApi')
 const beautyShots = ref([])
 const authenticated = ref(false)
 const appKey = ref('')
 const appSecret = ref('')
-let mediaclipHubApi = null
  
 function imageSelected(evt) {
   const fileObj = evt.target.files[0]
@@ -50,10 +51,10 @@ async function addToCart(productName, customerImage) {
   const foundProduct = products.find(product => product.name === productName)
   const newProjectId = await mediaclipHubApi.createProject(foundProduct, customerImage)
   const addToCartResult = await mediaclipHubApi.addToCart(newProjectId, foundProduct)
-  debugger
+  router.push({ path: addToCartResult.addToCartUrl })
 }
 async function getToken() {
-  mediaclipHubApi = new MediaclipHubApi(appKey.value, appSecret.value)
+  mediaclipHubApi.setKeyAndSecret(appKey.value, appSecret.value)
   await mediaclipHubApi.createUserToken()
   authenticated.value = true
 }

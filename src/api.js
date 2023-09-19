@@ -1,20 +1,29 @@
 import axios from 'axios'
 import base64 from 'base-64'
 
-const baseMediaclipUrl = 'https://api.mediacliphub.com'
+class MediaclipHubApi {
+  baseMediaclipUrl = 'https://api.mediacliphub.com'
 
-export class MediaclipHubApi {
-  constructor (appKey, appSecret) {
-    this.appKey = appKey
-    this.appSecret = appSecret
+  constructor () {
+    this.appKey = null
+    this.appSecret = null
     this.userToken = null
     this.userId = null
+  }
+
+  install (app, options) {
+    app.provide('mediaclipHubApi', this)
+  }
+
+  setKeyAndSecret (appKey, appSecret) {
+    this.appKey = appKey
+    this.appSecret = appSecret
   }
 
   async createUserToken () {
     try {
       const auth = base64.encode(`${this.appKey}:${this.appSecret}`)
-      const result = await axios.post(`${baseMediaclipUrl}/auth/jwt`,
+      const result = await axios.post(`${this.baseMediaclipUrl}/auth/jwt`,
       {
         storeData: {
           userId: '1d22584a-ac82-4b5d-8f2e-8c06aab39f12'
@@ -69,7 +78,7 @@ export class MediaclipHubApi {
           photoUrns: [photoUrn],
         }
       })
-      const url = `${baseMediaclipUrl}/stores/${this.appKey}/beautyShots`
+      const url = `${this.baseMediaclipUrl}/stores/${this.appKey}/beautyShots`
       const result = await axios.post(url, { beautyShots }, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}` }})
       return result.data.beautyshotsUrls
     } catch (err) {
@@ -88,7 +97,7 @@ export class MediaclipHubApi {
           photos: [imageUrn]
         }
       }
-      const result = await axios.post(`${baseMediaclipUrl}/projects`, createProjectPayload, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}` }})
+      const result = await axios.post(`${this.baseMediaclipUrl}/projects`, createProjectPayload, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}` }})
       return result.data.id
     } catch (err) {
       throw err
@@ -98,11 +107,25 @@ export class MediaclipHubApi {
   async addToCart (projectId, product) {
     try {
       const url = `https://ecb.mediacliphub.com/addtocart?data-projectId=${projectId}&data-storeId=${this.appKey}&module=${product.module}`
-      const result = await axios.post(url, null, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}`}})
+      const result = await axios.post(url, null, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}` }})
+      return result
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async getProjectThumbnail (projectId) {
+    try {
+      const url = `https://render.mediacliphub.com/projects/${projectId}/thumb`
+      const result = await axios.get(url, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}`, 'X-Store-User': this.userId }})
       return result
     } catch (err) {
       throw err
     }
   }
 }
+
+const mediaclipHubApi = new MediaclipHubApi()
+
+export default mediaclipHubApi
   
