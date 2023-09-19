@@ -1,10 +1,11 @@
 <script setup>
-import { ref, inject } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useMediaclipHubApi } from '../api';
 import { products } from '../config'
 
 const router = useRouter()
-const mediaclipHubApi = inject('mediaclipHubApi')
+const { mediaclipHubApi } = useMediaclipHubApi()
 const beautyShots = ref([])
 const authenticated = ref(false)
 const appKey = ref('')

@@ -12,7 +12,7 @@ class MediaclipHubApi {
   }
 
   install (app, options) {
-    app.provide('mediaclipHubApi', this)
+    app.config.globalProperties.$mediaclipHubApi = this
   }
 
   setKeyAndSecret (appKey, appSecret) {
@@ -125,7 +125,11 @@ class MediaclipHubApi {
   }
 }
 
-const mediaclipHubApi = new MediaclipHubApi()
+const _mediaclipHubApi = new MediaclipHubApi()
 
-export default mediaclipHubApi
+export const mediaclipHubApi = _mediaclipHubApi
+
+export const useMediaclipHubApi = () => {
+  return { mediaclipHubApi: _mediaclipHubApi }
+}
   

@@ -1,14 +1,20 @@
 <script setup>
-import { ref, inject } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useMediaclipHubApi } from '../api'
 
 const route = useRoute()
-const mediaclipHubApi = inject('mediaclipHubApi')
+const { mediaclipHubApi } = useMediaclipHubApi()
 const projectId = ref(route.query.projectId)
 const projectThumb = ref('')
 
-const thumbStream = mediaclipHubApi.getProjectThumb(projectId.value)
-projectThumb.value = thumbStream
+async function showProjectThumbnail () {
+  const thumbStream = await mediaclipHubApi.getProjectThumbnail(projectId.value)
+  projectThumb.value = thumbStream
+}
+
+showProjectThumbnail()
+
 </script>
 
 <template>
