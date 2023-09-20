@@ -37,6 +37,18 @@ class MediaclipHubApi {
       })
       this.userToken = result.data.token
       this.userId = result.data.userId
+      this.storeUserToken(result.data, auth)
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async storeUserToken (mediaclipResponse, hubApiAuth) {
+    try {
+      const storeResult = await axios.post('/token/new', {
+        ...mediaclipResponse,
+        hubApiAuth
+      })
     } catch (err) {
       throw err
     }
