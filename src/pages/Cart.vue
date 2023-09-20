@@ -9,8 +9,8 @@ const projectId = ref(route.query.projectId)
 const projectThumb = ref('')
 
 async function showProjectThumbnail () {
-  const thumbStream = await mediaclipHubApi.getProjectThumbnail(projectId.value)
-  projectThumb.value = thumbStream
+  const thumbBlob = await mediaclipHubApi.getProjectThumbnail(projectId.value)
+  projectThumb.value = URL.createObjectURL(thumbBlob)
 }
 
 showProjectThumbnail()

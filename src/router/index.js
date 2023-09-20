@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Upload from '../pages/Upload.vue'
 import Cart from '../pages/Cart.vue'
+import Editor from '../pages/Editor.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: Cart
+  },
+  {
+    path: '/editor',
+    name: 'editor',
+    component: Editor
   }
 ]
 const router = createRouter({

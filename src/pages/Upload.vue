@@ -10,6 +10,7 @@ const beautyShots = ref([])
 const authenticated = ref(false)
 const appKey = ref('')
 const appSecret = ref('')
+const projectId = ref('')
  
 function imageSelected(evt) {
   const fileObj = evt.target.files[0]
@@ -50,14 +51,26 @@ async function getBeautyShots (photoUrn) {
 }
 async function addToCart(productName, customerImage) {
   const foundProduct = products.find(product => product.name === productName)
-  const newProjectId = await mediaclipHubApi.createProject(foundProduct, customerImage)
-  const addToCartResult = await mediaclipHubApi.addToCart(newProjectId, foundProduct)
-  router.push({ path: addToCartResult.addToCartUrl })
+  await createProject(foundProduct, customerImage)
+  const addToCartResult = await mediaclipHubApi.addToCart(projectId.value, foundProduct)
+  // router.push({ path: addToCartResult.addToCartUrl })
+  router.push({ name: 'cart', query: { projectId: projectId.value} })
 }
 async function getToken() {
   mediaclipHubApi.setKeyAndSecret(appKey.value, appSecret.value)
   await mediaclipHubApi.createUserToken()
   authenticated.value = true
+}
+
+async function createProject (product, customerImage) {
+  const newProjectId = await mediaclipHubApi.createProject(product, customerImage)
+  projectId.value = newProjectId
+}
+
+async function launchDesigner(productName, customerImage) {
+  const foundProduct = products.find(product => product.name === productName)
+  await createProject(foundProduct, customerImage)
+  router.push({name: 'editor', query: { projectId: projectId.value}})
 }
 </script>
 
@@ -76,7 +89,7 @@ async function getToken() {
               <i class="bi bi-cart-plus"></i>
               Add to Cart
             </button>
-            <button class="btn btn-secondary">
+            <button @click="launchDesigner(beautyShot.name, beautyShot.originalImage)" class="btn btn-secondary">
               <i class="bi bi-pencil"></i>
               Customize
             </button>

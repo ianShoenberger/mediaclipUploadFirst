@@ -117,8 +117,8 @@ class MediaclipHubApi {
   async getProjectThumbnail (projectId) {
     try {
       const url = `https://render.mediacliphub.com/projects/${projectId}/thumb`
-      const result = await axios.get(url, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}`, 'X-Store-User': this.userId }})
-      return result
+      const result = await axios.get(url, { headers: { 'Authorization': `HubStoreUserToken ${this.userToken}`}, responseType: 'blob' })
+      return result.data
     } catch (err) {
       throw err
     }
