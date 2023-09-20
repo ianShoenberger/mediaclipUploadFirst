@@ -33,4 +33,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+#designer {
+  height: 100vh;
+}
 </style>

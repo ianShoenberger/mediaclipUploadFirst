@@ -18,11 +18,29 @@ showProjectThumbnail()
 </script>
 
 <template>
-<div>
-  <h1>{{ projectId }}</h1>
-  <img :src="projectThumb" />
+<div id="cartContainer">
+  <h1>Shopping Cart</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img :src="projectThumb" width="150" class="img-fluid rounded shadow-sm" /></td>
+        <td class="align-middle">$1.00</td>
+        <td class="align-middle">1</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 </template>
 
 <style scoped>
+#cartContainer {
+  width: 50vw;
+}
 </style>

@@ -44,6 +44,9 @@ class MediaclipHubApi {
   }
 
   async storeUserToken (mediaclipResponse, hubApiAuth) {
+    if (process.env.NODE_ENV === 'development') {
+      return
+    }
     try {
       const storeResult = await axios.post('/token/new', {
         ...mediaclipResponse,
