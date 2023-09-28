@@ -1,3 +1,4 @@
+export const appSecret = '1.OiL/F9FcXdGtBnLjI5/QcVYx/m3eo8CkGC7t1NIupf7k8w=='
 export const products = [{
   module: 'Gifting',
   productId: '$(package:mediaclip/office)/products/mousepad',
