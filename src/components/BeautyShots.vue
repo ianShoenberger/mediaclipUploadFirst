@@ -9,16 +9,17 @@ const projectId = ref('')
 const { mediaclipHubApi } = useMediaclipHubApi()
 const router = useRouter()
 
-const props = defineProps(['image'])
+const props = defineProps(['images'])
 
 async function getBeautyShots () {
-  const photoUrn = props.image
-  const rawBeautyShots = await mediaclipHubApi.getBeautyShots(photoUrn, products)
-  beautyShots.value = products.map((product, i) => {
+  const photoUrns = props.images
+  const rawBeautyShots = await mediaclipHubApi.getBeautyShots(photoUrns, products)
+  const numOfProducts = products.length
+  beautyShots.value = rawBeautyShots.map((rawBeautyShot, i) => {
     return {
-      name: product.name,
-      url: rawBeautyShots[i],
-      originalImage: photoUrn
+      name: products[i % numOfProducts].name,
+      url: rawBeautyShot,
+      originalImage: photoUrns[Math.floor(i / numOfProducts)]
     }
   })
 }

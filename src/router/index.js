@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Authenticate from '../pages/Authenticate.vue'
 import Upload from '../pages/Upload.vue'
+import UserPhotos from '../pages/UserPhotos.vue'
 import Cart from '../pages/Cart.vue'
 import Editor from '../pages/Editor.vue'
 
@@ -14,6 +15,11 @@ const routes = [
     path: '/upload',
     name: 'upload',
     component: Upload
+  },
+  {
+    path: '/userPhotos',
+    name: 'userPhotos',
+    component: UserPhotos
   },
   {
     path: '/cart',

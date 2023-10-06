@@ -4,7 +4,7 @@ import { useMediaclipHubApi } from '../api'
 import BeautyShots from '../components/BeautyShots.vue'
 
 const { mediaclipHubApi } = useMediaclipHubApi()
-const photoId = ref('')
+const photoUrn = ref('')
 
 function imageSelected(evt) {
   const fileObj = evt.target.files[0]
@@ -31,14 +31,14 @@ async function uploadPhoto(name, binaryString) {
     } while (statusCheck.status !== 'Done')
   }
 
-  photoId.value = uploadStatus.photoId
+  photoUrn.value = uploadStatus.photoId
 }
 </script>
 
 <template>
 <div class="container">
   <input type="file" id="imagePicker" ref="imagePicker" @change="imageSelected" />
-  <BeautyShots v-if="photoId" :image="photoId"></BeautyShots>
+  <BeautyShots v-if="photoUrn" :images="[photoUrn]"></BeautyShots>
 </div>
 </template>
 
