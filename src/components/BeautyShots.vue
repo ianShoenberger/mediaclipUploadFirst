@@ -46,7 +46,9 @@ getBeautyShots()
 <div class="row row-cols-1 row-cols-md-4 g-4">
   <div v-for="beautyShot in beautyShots" :key="beautyShot.name" class="col">
     <div class="card h-100">
-      <img :src="beautyShot.url" class="card-img-top" />
+      <div class="flex-grow-1 d-flex justify-content-center align-items-center">
+        <img :src="beautyShot.url" class="card-img-top" />
+      </div>
       <div class="card-body">
         <h5 class="card-title">{{ beautyShot.name }}</h5>
       </div>
@@ -66,4 +68,7 @@ getBeautyShots()
 </template>
 
 <style scoped>
+.card-body {
+  text-align: center;
+}
 </style>

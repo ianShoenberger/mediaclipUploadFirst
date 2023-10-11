@@ -12,6 +12,9 @@ async function getToken() {
   await mediaclipHubApi.createUserToken()
   authenticated.value = true
 }
+if (mediaclipHubApi.userToken) {
+  authenticated.value = true
+}
 </script>
 
 <template>
